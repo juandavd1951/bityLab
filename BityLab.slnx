@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="AppBityLab/AppBityLab.csproj" />
+  <Project Path="libBityLab/libBityLab.csproj" />
+  <Project Path="TestProject1/TestProject1.csproj" />
+</Solution>
