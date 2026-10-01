@@ -16,217 +16,236 @@ CREATE TABLE ROLES (
 
 
 GO
---MARCAS
+-- MARCAS
 CREATE TABLE MARCAS (
-    id INT PRIMARY KEY,
-    nombre nvarchar(50),
-    sitio_web nvarchar(100),
-    correo_soporte nvarchar(100),
-    telefono_contacto nvarchar(20)
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    nombre NVARCHAR(50),
+    sitio_web NVARCHAR(100),
+    correo_soporte NVARCHAR(100),
+    telefono_contacto NVARCHAR(20)
 );
 GO
---PROVEEDORES
+
+-- PROVEEDORES
 CREATE TABLE PROVEEDORES (
-    id INT PRIMARY KEY,
-    nombre_empresa nvarchar(100),
-    nit_empresa nvarchar(20),
-    nombre_contacto nvarchar(100),
-    telefono_principal nvarchar(20),
-    correo_ventas nvarchar(100),
-    direccion_fisica nvarchar(150)
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    nombre_empresa NVARCHAR(100),
+    nit_empresa NVARCHAR(20),
+    nombre_contacto NVARCHAR(100),
+    telefono_principal NVARCHAR(20),
+    correo_ventas NVARCHAR(100),
+    direccion_fisica NVARCHAR(150)
 );
 GO
---METODOS DE PAGO
+
+-- METODOS DE PAGO
 CREATE TABLE METODOS_PAGO (
-    id INT PRIMARY KEY,
-    nombre nvarchar(50),
-    descripcion nvarchar(255)
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    nombre NVARCHAR(50),
+    descripcion NVARCHAR(255)
 );
 GO
---PROMOCIONES
+
+-- PROMOCIONES
 CREATE TABLE PROMOCIONES (
-    id INT PRIMARY KEY,
-    codigo_cupon nvarchar(50),
-    descripcion nvarchar(255),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    codigo_cupon NVARCHAR(50),
+    descripcion NVARCHAR(255),
     porcentaje_descuento DECIMAL(5, 2),
     fecha_inicio DATETIME,
     fecha_fin DATETIME
 );
 GO
---SUCURSALES
+
+-- SUCURSALES
 CREATE TABLE SUCURSALES (
-    id INT PRIMARY KEY,
-    nombre nvarchar(100),
-    direccion nvarchar(150),
-    ciudad nvarchar(50),
-    telefono_contacto nvarchar(20),
-    horario_atencion nvarchar(100)
-);
-GO
---PAQUETERIA
-CREATE TABLE EmpresaPaqueteria (
-    id INT PRIMARY KEY,
-    teléfono nvarchar(20),
-    correoElectronico nvarchar(100),
-    NIT nvarchar(20),
-    nombre_paqueteria nvarchar(100)
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    nombre NVARCHAR(100),
+    direccion NVARCHAR(150),
+    ciudad NVARCHAR(50),
+    telefono_contacto NVARCHAR(20),
+    horario_atencion NVARCHAR(100)
 );
 GO
 
+-- PAQUETERIA
+CREATE TABLE EmpresaPaqueteria (
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    telefono NVARCHAR(20),
+    correoElectronico NVARCHAR(100),
+    NIT NVARCHAR(20),
+    nombre_paqueteria NVARCHAR(100)
+);
+GO
 
 -- 2. TABLAS CON DEPENDENCIAS
---USUARIOS
+
+-- USUARIOS
 CREATE TABLE USUARIOS (
-    id INT PRIMARY KEY,
-    id_rol INT REFERENCES ROLES(id_rol),
-    nombre_completo_u nvarchar(100),
-    cedula nvarchar(20),
-    correo nvarchar(100),
-    contrasena nvarchar(100),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_rol INT REFERENCES ROLES(id),
+    nombre_completo_u NVARCHAR(100),
+    cedula NVARCHAR(20),
+    correo NVARCHAR(100),
+    contrasena NVARCHAR(100),
     fecha_registro DATETIME
 );
 GO
---EMPLEADOS
+
+-- EMPLEADOS
 CREATE TABLE EMPLEADOS (
-    id INT PRIMARY KEY,
-    id_usuario INT REFERENCES USUARIOS(id_usuario),
-    id_sucursal INT REFERENCES SUCURSALES(id_sucursal),
-    cargo_puesto nvarchar(50),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_usuario INT REFERENCES USUARIOS(id),
+    id_sucursal INT REFERENCES SUCURSALES(id),
+    cargo_puesto NVARCHAR(50),
     salario DECIMAL(10, 2),
     fecha_contratacion DATE
 );
 GO
---CLIENTES
+
+-- CLIENTES
 CREATE TABLE CLIENTES (
-    id INT PRIMARY KEY,
-    id_usuario INT REFERENCES USUARIOS(id_usuario),
-    nombre_completo_C nvarchar(100),
-    telefono nvarchar(20),
-    direccion_principal nvarchar(150),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_usuario INT REFERENCES USUARIOS(id),
+    nombre_completo_C NVARCHAR(100),
+    telefono NVARCHAR(20),
+    direccion_principal NVARCHAR(150),
     fecha_nacimiento DATE
 );
 GO
---PRODUCTOS
+
+-- PRODUCTOS
 CREATE TABLE PRODUCTOS (
-    id INT PRIMARY KEY,
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     categoria INT,
-    id_marca INT REFERENCES MARCAS(id_marca),
-    nombre_producto nvarchar(100),
-    descripcion_larga nvarchar(200),
+    id_marca INT REFERENCES MARCAS(id),
+    nombre_producto NVARCHAR(100),
+    descripcion_larga NVARCHAR(200),
     precio_venta DECIMAL(10, 2),
-    Número_serie nvarchar(50),
-    modelo nvarchar(50),
-    especificaciones_Técnicas nvarchar(MAX) -- Cambiado a nvarchar(MAX) para compatibilidad estándar con SQL Server
+    numero_serie NVARCHAR(50),
+    modelo NVARCHAR(50),
+    especificaciones_tecnicas NVARCHAR(MAX)
 );
 GO
---INVENTARIOS
+
+-- INVENTARIOS
 CREATE TABLE INVENTARIOS (
-    id INT PRIMARY KEY,
-    id_producto INT REFERENCES PRODUCTOS(id_producto),
-    id_sucursal INT REFERENCES SUCURSALES(id_sucursal),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_producto INT REFERENCES PRODUCTOS(id),
+    id_sucursal INT REFERENCES SUCURSALES(id),
     cantidad_disponible INT,
     stock_minimo INT,
-    estanteria_ubicacion nvarchar(50),
+    estanteria_ubicacion NVARCHAR(50),
     ultima_actualizacion DATETIME,
     capacidad_bodega INT
 );
 GO
---COMPRAS_PRODUCTOS
+
+-- COMPRAS_PRODUCTOS
 CREATE TABLE COMPRAS_PRODUCTOS (
-    id INT PRIMARY KEY,
-    id_proveedor INT REFERENCES PROVEEDORES(id_proveedor),
-    id_sucursal INT REFERENCES SUCURSALES(id_sucursal),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_proveedor INT REFERENCES PROVEEDORES(id),
+    id_sucursal INT REFERENCES SUCURSALES(id),
     fecha_orden DATETIME,
-    estado_orden nvarchar(50),
+    estado_orden NVARCHAR(50),
     total_estimado DECIMAL(10, 2),
-    notas_internas nvarchar(200)
+    notas_internas NVARCHAR(200)
 );
 GO
---DETALLES_ORDENES_COMPRAS
+
+-- DETALLES_ORDENES_COMPRAS
 CREATE TABLE DETALLES_ORDENES_COMPRAS (
-    id INT PRIMARY KEY,
-    id_compras_producto INT REFERENCES COMPRAS_PRODUCTOS(id_compras_producto),
-    id_producto INT REFERENCES PRODUCTOS(id_producto),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_compras_producto INT REFERENCES COMPRAS_PRODUCTOS(id),
+    id_producto INT REFERENCES PRODUCTOS(id),
     cantidad_solicitada INT,
     costo_unitario DECIMAL(10, 2),
     subtotal_costo DECIMAL(10, 2)
 );
 GO
---VENTAS
+
+-- VENTAS
 CREATE TABLE VENTAS (
-    id INT PRIMARY KEY,
-    id_cliente INT REFERENCES CLIENTES(id_cliente),
-    id_sucursal INT REFERENCES SUCURSALES(id_sucursal),
-    id_promocion INT REFERENCES PROMOCIONES(id_promocion),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_cliente INT REFERENCES CLIENTES(id),
+    id_sucursal INT REFERENCES SUCURSALES(id),
+    id_promocion INT REFERENCES PROMOCIONES(id),
     fecha_venta DATETIME,
-    estado_venta nvarchar(50),
+    estado_venta NVARCHAR(50),
     total_pagar DECIMAL(10, 2),
-    direccion_envio nvarchar(150)
+    direccion_envio NVARCHAR(150)
 );
 GO
---DETALLE_VENTAS
+
+-- DETALLE_VENTAS
 CREATE TABLE DETALLE_VENTAS (
-    id INT PRIMARY KEY,
-    id_venta INT REFERENCES VENTAS(id_venta),
-    id_producto INT REFERENCES PRODUCTOS(id_producto),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_venta INT REFERENCES VENTAS(id),
+    id_producto INT REFERENCES PRODUCTOS(id),
     cantidad INT,
     precio_unitario_venta DECIMAL(10, 2),
     descuento_aplicado DECIMAL(10, 2),
     subtotal DECIMAL(10, 2)
 );
 GO
---pagos
+
+-- PAGOS
 CREATE TABLE PAGOS (
-    id INT PRIMARY KEY,
-    id_venta INT REFERENCES VENTAS(id_venta),
-    id_metodo_pago INT REFERENCES METODOS_PAGO(id_metodo_pago),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_venta INT REFERENCES VENTAS(id),
+    id_metodo_pago INT REFERENCES METODOS_PAGO(id),
     monto_pagado DECIMAL(10, 2),
     fecha_pago DATETIME,
-    estado_transaccion nvarchar(50),
-    referencia_pasarela nvarchar(100)
+    estado_transaccion NVARCHAR(50),
+    referencia_pasarela NVARCHAR(100)
 );
 GO
---envios
+
+-- ENVIOS
 CREATE TABLE ENVIOS (
-    id INT PRIMARY KEY,
-    id_venta INT REFERENCES VENTAS(id_venta),
-    EmpresaPaqueteriaID INT REFERENCES EmpresaPaqueteria(EmpresaPaqueteriaID),
-    numero_guia nvarchar(50),
-    estado nvarchar(50),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_venta INT REFERENCES VENTAS(id),
+    id_empresa_paqueteria INT REFERENCES EmpresaPaqueteria(id),
+    numero_guia NVARCHAR(50),
+    estado NVARCHAR(50),
     fecha_estimada_entrega DATE,
     fecha_entrega_real DATE,
     costo DECIMAL(10, 2)
 );
 GO
---GARANTIAS
+
+-- GARANTIAS
 CREATE TABLE GARANTIAS (
-    id INT PRIMARY KEY,
-    id_detalle_venta INT REFERENCES DETALLE_VENTAS(id_detalle_venta),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_detalle_venta INT REFERENCES DETALLE_VENTAS(id),
     fecha_solicitud DATE,
-    motivo_falla nvarchar(255),
-    estado nvarchar(50),
-    resolucion_tecnica nvarchar(255),
+    motivo_falla NVARCHAR(255),
+    estado NVARCHAR(50),
+    resolucion_tecnica NVARCHAR(255),
     fecha_cierre DATE
 );
 GO
---DEVOLUCIONES
+
+-- DEVOLUCIONES
 CREATE TABLE DEVOLUCIONES (
-    id INT PRIMARY KEY,
-    id_VENTAS INT REFERENCES VENTAS(id_venta),
-    id_metodo_pago_reembolso INT REFERENCES METODOS_PAGO(id_metodo_pago),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_venta INT REFERENCES VENTAS(id),
+    id_metodo_pago_reembolso INT REFERENCES METODOS_PAGO(id),
     fecha_solicitud DATE,
-    motivo nvarchar(255),
-    estado_proceso nvarchar(50),
+    motivo NVARCHAR(255),
+    estado_proceso NVARCHAR(50),
     monto_reembolsado DECIMAL(10, 2)
 );
 GO
 
+-- RESENAS
 CREATE TABLE RESENAS (
-    id INT PRIMARY KEY,
-    id_producto INT REFERENCES PRODUCTOS(id_producto),
-    id_cliente INT REFERENCES CLIENTES(id_cliente),
+    id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
+    id_producto INT REFERENCES PRODUCTOS(id),
+    id_cliente INT REFERENCES CLIENTES(id),
     calificacion_estrellas INT,
-    comentario nvarchar(200),
+    comentario NVARCHAR(200),
     fecha_publicacion DATETIME
 );
-GO*/
+GO
+*/

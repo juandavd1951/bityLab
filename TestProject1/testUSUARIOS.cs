@@ -15,7 +15,7 @@ namespace presentacion_mst
         public testUSUARIOS()
         {
             this.conexion = new Conexion();
-            this.conexion.StringConexion = "server=localhost;database=BityLab;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = "server=kuskuruma;database=BityLab;Integrated Security=True;TrustServerCertificate=true;";
         }
 
         [TestMethod]
@@ -23,7 +23,7 @@ namespace presentacion_mst
         {
             Insertar();
             Consultar();
-            //Actualizar();
+            Actualizar();
             Borrar();
         }
 
@@ -31,11 +31,12 @@ namespace presentacion_mst
         {
             this.entidad = new USUARIOS()
             {
-                nombre_completo_u = "Juan Perez",
-                cedula = "1234567890",
-                correo = "juan.perez@example.com",
-                contrasena = "password123",
-                fecha_registro = DateTime.Now,  
+                id_rol = 1,
+                nombre_completo_u = "juan david cano",
+                cedula = "123456789",
+                correo = "juan.david.cano@example.com"
+
+
             };
             this.conexion.USUARIOS!.Add(this.entidad!);
             this.conexion.SaveChanges();
@@ -57,6 +58,16 @@ namespace presentacion_mst
               this.conexion!.SaveChanges();
           }
         */
+
+        private void Actualizar()
+        {
+            this.entidad!.nombre_completo_u = "mahius";
+            this.entidad!.cedula = "1000012";
+            this.entidad!.correo = "mati@corre.com";
+            this.conexion.USUARIOS!.Update(this.entidad!);
+            this.conexion.SaveChanges();
+
+        }
         private void Borrar()
         {
             this.conexion.USUARIOS!.Remove(this.entidad!);

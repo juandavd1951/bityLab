@@ -11,7 +11,7 @@ namespace libBityLab.entidades
         public string? correo { get; set; }
         public string? contrasena { get; set; }
         public DateTime? fecha_registro { get; set; }
-        [ForeignKey("ROLES")] public ROLES? _ROLES { get; set; }
+        [ForeignKey("id_rol")] public ROLES? _ROLES { get; set; }
         public List<CLIENTES>? CLIENTES { get; set; }
         public List<EMPLEADOS>? EMPLEADOS { get; set; }
 
