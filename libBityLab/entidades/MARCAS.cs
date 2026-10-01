@@ -8,9 +8,9 @@ namespace libBityLab.entidades
     {
         public int id { get; set; }
         public string? nombre { get; set; }
-        public string? sitio_web { get; set; }
-        public string? correo_soporte { get; set; }
-        public string? telefono_contacto { get; set; }
+        public string? sitioWeb { get; set; }
+        public string? correoSoporte { get; set; }
+        public string? telefonoContacto { get; set; }
         public List<PRODUCTOS>? PRODUCTOS { get; set; }
 
     }

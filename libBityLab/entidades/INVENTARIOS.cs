@@ -10,11 +10,11 @@ namespace libBityLab.entidades
         public int id { get; set; }
         public int id_producto { get; set; }
         public int id_sucursal { get; set; }
-        public int cantidad_disponible { get; set; }
-        public int stock_minimo { get; set; }
-        public string estanteria_ubicacion { get; set; } = string.Empty;
-        public DateTime ultima_actualizacion { get; set; }
-        public int capacidad_bodega { get; set; }
+        public int cantidadDisponible { get; set; }
+        public int stockMinimo { get; set; }
+        public string estanteriaUbicacion { get; set; } = string.Empty;
+        public DateTime ultimaActualizacion { get; set; }
+        public int capacidadBodega { get; set; }
         [ForeignKey("id_producto")] public PRODUCTOS? _PRODUCTO { get; set; }
         [ForeignKey("id_sucursal")] public SUCURSALES? _SUCURSAL { get; set; }
 

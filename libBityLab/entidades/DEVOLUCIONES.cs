@@ -8,14 +8,14 @@ namespace libBityLab.entidades
     public class DEVOLUCIONES
     {
         public int id { get; set; }
-        public int id_VENTAS { get; set; }
+        public int id_venta { get; set; }
         public int id_metodo_pago_reembolso { get; set; }
-        public DateTime fecha_solicitud { get; set; }
+        public DateTime fechaSolicitud { get; set; }
         public string motivo { get; set; } = string.Empty;
-        public string estado_proceso { get; set; } = string.Empty;
-        public decimal monto_reembolsado { get; set; }
-        [ForeignKey("METODOS_PAGO")] public METODOS_PAGO? _METODOS_PAGO { get; set; }
-        [ForeignKey("VENTAS")] public VENTAS? _VENTAS { get; set; }
+        public string estadoProceso { get; set; } = string.Empty;
+        public decimal montoReembolsado { get; set; }
+        [ForeignKey("id_metodo_pago_reembolso")] public METODOS_PAGO? _METODOS_PAGO { get; set; }
+        [ForeignKey("id_venta")] public VENTAS? _VENTAS { get; set; }
     }
 
 }

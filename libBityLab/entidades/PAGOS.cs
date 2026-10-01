@@ -10,12 +10,12 @@ namespace libBityLab.entidades
         public int id { get; set; }
         public int id_venta { get; set; }
         public int id_metodo_pago { get; set; }
-        public decimal monto_pagado { get; set; }
-        public DateTime fecha_pago { get; set; }
-        public string estado_transaccion { get; set; } = string.Empty;
-        public string referencia_pasarela { get; set; } = string.Empty;
-        [ForeignKey("VENTAS")] public VENTAS? _VENTAS { get; set; }
-        [ForeignKey("METODOS_PAGO")] public METODOS_PAGO? _METODOS_PAGO { get; set; }
+        public decimal montoPagado { get; set; }
+        public DateTime fechaPago { get; set; }
+        public string estadoTransaccion { get; set; } = string.Empty;
+        public string referenciaPasarela { get; set; } = string.Empty;
+        [ForeignKey("id_venta")] public VENTAS? _VENTAS { get; set; }
+        [ForeignKey("id_metodo_pago")] public METODOS_PAGO? _METODOS_PAGO { get; set; }
     }
 
 }

@@ -7,11 +7,11 @@ namespace libBityLab.entidades
     public class PROMOCIONES
     {
         public int id { get; set; }
-        public string codigo_cupon { get; set; } = string.Empty;
+        public string codigoCupon { get; set; } = string.Empty;
         public string descripcion { get; set; } = string.Empty;
-        public decimal porcentaje_descuento { get; set; }
-        public DateTime fecha_inicio { get; set; }
-        public DateTime fecha_fin { get; set; }
+        public decimal porcentajeDescuento { get; set; }
+        public DateTime fechaInicio { get; set; }
+        public DateTime fechaFin { get; set; }
         public List<VENTAS>? VENTAS { get; set; }
     }
     /*CREATE TABLE PROMOCIONES (

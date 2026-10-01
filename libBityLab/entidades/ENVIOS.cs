@@ -9,13 +9,13 @@ namespace libBityLab.entidades
     {
         public int id { get; set; }
         public int id_venta { get; set; }
-        public int EmpresaPaqueteriaID { get; set; }
-        public string numero_guia { get; set; } = string.Empty;
+        public int id_empresa_paqueteria { get; set; }
+        public string numeroGuia { get; set; } = string.Empty;
         public string estado { get; set; } = string.Empty;
-        public DateTime fecha_estimada_entrega { get; set; }
-        public DateTime fecha_entrega_real { get; set; }
+        public DateTime fechaEstimadaEntrega { get; set; }
+        public DateTime fechaEntregaReal { get; set; }
         public decimal costo { get; set; }
-        [ForeignKey("EmpresaPaqueteria")] public EmpresaPaqueteria? _EmpresaPaqueteria { get; set; }
+        [ForeignKey("id_empresa_paqueteria")] public EmpresaPaqueteria? _EmpresaPaqueteria { get; set; }
         [ForeignKey("id_venta")] public VENTAS? _VENTAS { get; set; }
     }
    

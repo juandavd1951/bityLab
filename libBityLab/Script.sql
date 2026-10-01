@@ -327,7 +327,7 @@ GO
 
 -- 19. GARANTIAS
 INSERT INTO GARANTIAS (id_detalle_venta, fechaSolicitud, motivoFalla, estado, resolucionTecnica, fechaCierre)
-VALUES (1, GETDATE(), 'Fallo en clic derecho', 'En Proceso', 'Pendiente de revisión en laboratorio', NULL);
+VALUES (1, GETDATE(), 'Fallo en clic derecho', 'En Proceso', 'Pendiente de revisión en laboratorio', 2026-10-04);
 GO
 
 -- 20. DEVOLUCIONES
