@@ -34,7 +34,7 @@ namespace presentacion_mst
               
                 nombre = "juan david cano",
                 descripcion = "Profesional en todo",
-                salario_estimado = 10000,
+                salarioEstimado = 10000,
             };
             this.conexion.ROLES!.Add(this.entidad!);
             this.conexion.SaveChanges();
@@ -61,7 +61,7 @@ namespace presentacion_mst
         {
             this.entidad!.nombre = "juan david cano";
             this.entidad!.descripcion = "Profesional en todo NADA";
-            this.entidad!.salario_estimado = 100;
+            this.entidad!.salarioEstimado = 100;
             this.conexion.ROLES!.Update(this.entidad!);
             this.conexion.SaveChanges();
 

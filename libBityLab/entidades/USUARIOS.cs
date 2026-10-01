@@ -6,11 +6,11 @@ namespace libBityLab.entidades
     {
         public int id { get; set; }
         public int id_rol { get; set; }
-        public string? nombre_completo_u { get; set; }
+        public string? nombreCompletoU { get; set; }
         public string? cedula { get; set; }
         public string? correo { get; set; }
         public string? contrasena { get; set; }
-        public DateTime? fecha_registro { get; set; }
+        public DateTime? fechaRegistro { get; set; }
         [ForeignKey("id_rol")] public ROLES? _ROLES { get; set; }
         public List<CLIENTES>? CLIENTES { get; set; }
         public List<EMPLEADOS>? EMPLEADOS { get; set; }

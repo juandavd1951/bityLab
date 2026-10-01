@@ -34,10 +34,10 @@ namespace presentacion_mst
                 id_cliente = 1,
                 id_sucursal = 1,
                 id_promocion = 1,
-                fecha_venta = DateTime.Now,
-                estado_venta = "Pendiente",
-                total_pagar = 1000.00m,
-                direccion_envio = "Calle Falsa 123"
+                fechaVenta = DateTime.Now,
+                estadoVenta = "Pendiente",
+                totalPagar = 1000.00m,
+                direccionEnvio = "Calle Falsa 123"
 
 
             };
@@ -69,10 +69,10 @@ namespace presentacion_mst
             this.entidad!.id_cliente = 1;
             this.entidad!.id_sucursal = 1;
             this.entidad!.id_promocion = 1;
-            this.entidad!.fecha_venta = DateTime.Now;
-            this.entidad!.estado_venta = "Completada";
-            this.entidad!.total_pagar = 1500.00m;
-            this.entidad!.direccion_envio = "Calle Verdadera 456";
+            this.entidad!.fechaVenta = DateTime.Now;
+            this.entidad!.estadoVenta = "Completada";
+            this.entidad!.totalPagar = 1500.00m;
+            this.entidad!.direccionEnvio = "Calle Verdadera 456";
             this.conexion.VENTAS!.Update(this.entidad!);
             this.conexion.SaveChanges();
 

@@ -6,13 +6,14 @@ namespace libBityLab.entidades
 {
     public class PROVEEDORES
     {
+
         public int id { get; set; }
-        public string? nombre_empresa { get; set; }
-        public string? nit_empresa { get; set; }
-        public string? nombre_contacto { get; set; }
-        public string? telefono_principal { get; set; }
-        public string? correo_ventas { get; set; }
-        public string? direccion_fisica { get; set; }
+        public string? nombreEmpresa { get; set; }
+        public string? nitEmpresa { get; set; }
+        public string? nombreContacto { get; set; }
+        public string? telefonoPrincipal { get; set; }
+        public string? correoVentas { get; set; }
+        public string? direccionFisica { get; set; }
         public List<COMPRAS_PRODUCTOS>? COMPRAS_PRODUCTOS { get; set; }
     }
 

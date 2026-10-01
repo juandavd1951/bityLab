@@ -10,9 +10,9 @@ namespace libBityLab.entidades
         public int id { get; set; }
         public int id_producto { get; set; }
         public int id_cliente { get; set; }
-        public int calificacion_estrellas { get; set; }
+        public int calificacionEstrellas { get; set; }
         public string? comentario { get; set; }
-        public DateTime fecha_publicacion { get; set; }
+        public DateTime fechaPublicacion { get; set; }
         [ForeignKey("id_producto")] public PRODUCTOS? _PRODUCTOS { get; set; }
         [ForeignKey("id_cliente")] public CLIENTES? _CLIENTES { get; set; }
     }

@@ -33,9 +33,9 @@ namespace presentacion_mst
             {
                 id_producto = 1,
                 id_cliente = 1,
-                calificacion_estrellas = 5,
+                calificacionEstrellas = 5,
                 comentario = "Excelente producto",
-                fecha_publicacion = DateTime.Now
+                fechaPublicacion = DateTime.Now
 
 
             };
@@ -62,9 +62,9 @@ namespace presentacion_mst
 
         private void Actualizar()
         {
-            this.entidad!.calificacion_estrellas = 4;
+            this.entidad!.calificacionEstrellas = 4;
             this.entidad!.comentario = "Buen producto, pero podría mejorar";
-            this.entidad!.fecha_publicacion = DateTime.Now;
+            this.entidad!.fechaPublicacion = DateTime.Now;
 
             this.conexion.RESENAS!.Update(this.entidad!);
             this.conexion.SaveChanges();

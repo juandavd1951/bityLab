@@ -32,9 +32,11 @@ namespace presentacion_mst
             this.entidad = new USUARIOS()
             {
                 id_rol = 1,
-                nombre_completo_u = "juan david cano",
+                nombreCompletoU = "juan david cano",
                 cedula = "123456789",
-                correo = "juan.david.cano@example.com"
+                correo = "juan.david.cano@example.com",
+                contrasena = "password123",
+                fechaRegistro = DateTime.Now
 
 
             };
@@ -61,9 +63,11 @@ namespace presentacion_mst
 
         private void Actualizar()
         {
-            this.entidad!.nombre_completo_u = "mahius";
+            this.entidad!.nombreCompletoU = "mahius";
             this.entidad!.cedula = "1000012";
             this.entidad!.correo = "mati@corre.com";
+            this.entidad!.contrasena = "newpassword123";
+            this.entidad!.fechaRegistro = DateTime.Now;
             this.conexion.USUARIOS!.Update(this.entidad!);
             this.conexion.SaveChanges();
 
