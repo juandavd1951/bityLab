@@ -10,65 +10,65 @@ GO
 
 CREATE TABLE ROLES (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    nombre NVARCHAR(50),
-    descripcion NVARCHAR(255),
-    salarioEstimado DECIMAL(10, 2)
+    nombre NVARCHAR(50) NOT NULL UNIQUE,
+    descripcion NVARCHAR(255) NOT NULL,
+    salarioEstimado DECIMAL(10, 2) NOT NULL
 );
 GO
 
 CREATE TABLE MARCAS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    nombre NVARCHAR(50),
-    sitioWeb NVARCHAR(100),
-    correoSoporte NVARCHAR(100),
-    telefonoContacto NVARCHAR(20)
+    nombre NVARCHAR(50) NOT NULL UNIQUE,
+    sitioWeb NVARCHAR(100) NOT NULL,
+    correoSoporte NVARCHAR(100) NOT NULL,
+    telefonoContacto NVARCHAR(20) NOT NULL
 );
 GO
 
 CREATE TABLE PROVEEDORES (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    nombreEmpresa NVARCHAR(100),
-    nitEmpresa NVARCHAR(20),
-    nombreContacto NVARCHAR(100),
-    telefonoPrincipal NVARCHAR(20),
-    correoVentas NVARCHAR(100),
-    direccionFisica NVARCHAR(150)
+    nombreEmpresa NVARCHAR(100) NOT NULL,
+    nitEmpresa NVARCHAR(20) NOT NULL UNIQUE,
+    nombreContacto NVARCHAR(100) NOT NULL,
+    telefonoPrincipal NVARCHAR(20) NOT NULL,
+    correoVentas NVARCHAR(100) NOT NULL UNIQUE,
+    direccionFisica NVARCHAR(150) NOT NULL
 );
 GO
 
 CREATE TABLE METODOS_PAGO (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    nombre NVARCHAR(50),
-    descripcion NVARCHAR(255)
+    nombre NVARCHAR(50) NOT NULL UNIQUE,
+    descripcion NVARCHAR(255) NOT NULL
 );
 GO
 
 CREATE TABLE PROMOCIONES (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    codigoCupon NVARCHAR(50),
-    descripcion NVARCHAR(255),
-    porcentajeDescuento DECIMAL(5, 2),
-    fechaInicio DATETIME,
-    fechaFin DATETIME
+    codigoCupon NVARCHAR(50) NOT NULL UNIQUE,
+    descripcion NVARCHAR(255) NOT NULL,
+    porcentajeDescuento DECIMAL(5, 2) NOT NULL,
+    fechaInicio DATETIME NOT NULL,
+    fechaFin DATETIME NOT NULL
 );
 GO
 
 CREATE TABLE SUCURSALES (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    nombre NVARCHAR(100),
-    direccion NVARCHAR(150),
-    ciudad NVARCHAR(50),
-    telefonoContacto NVARCHAR(20),
-    horarioAtencion NVARCHAR(100)
+    nombre NVARCHAR(100) NOT NULL UNIQUE,
+    direccion NVARCHAR(150) NOT NULL,
+    ciudad NVARCHAR(50) NOT NULL,
+    telefonoContacto NVARCHAR(20) NOT NULL,
+    horarioAtencion NVARCHAR(100) NOT NULL
 );
 GO
 
-CREATE TABLE EmpresaPaqueteria (
+CREATE TABLE EMPRESAS_PAQUETERIA (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    telefono NVARCHAR(20),
-    correoElectronico NVARCHAR(100),
-    NIT NVARCHAR(20),
-    nombrePaqueteria NVARCHAR(100)
+    telefono NVARCHAR(20) NOT NULL,
+    correoElectronico NVARCHAR(100) NOT NULL UNIQUE,
+    NIT NVARCHAR(20) NOT NULL UNIQUE,
+    nombrePaqueteria NVARCHAR(100) NOT NULL UNIQUE
 );
 GO
 
@@ -78,161 +78,161 @@ GO
 
 CREATE TABLE USUARIOS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_rol INT REFERENCES ROLES(id),
-    nombreCompletoU NVARCHAR(100),
-    cedula NVARCHAR(20),
-    correo NVARCHAR(100),
-    contrasena NVARCHAR(100),
-    fechaRegistro DATETIME
+    id_rol INT NOT NULL REFERENCES ROLES(id),
+    nombreCompletoU NVARCHAR(100) NOT NULL,
+    cedula NVARCHAR(20) NOT NULL UNIQUE,
+    correo NVARCHAR(100) NOT NULL UNIQUE,
+    contrasena NVARCHAR(100) NOT NULL,
+    fechaRegistro DATETIME NOT NULL
 );
 GO
 
 CREATE TABLE EMPLEADOS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_usuario INT REFERENCES USUARIOS(id),
-    id_sucursal INT REFERENCES SUCURSALES(id),
-    cargoPuesto NVARCHAR(50),
-    salario DECIMAL(10, 2),
-    fechaContratacion DATE
+    id_usuario INT NOT NULL UNIQUE REFERENCES USUARIOS(id),
+    id_sucursal INT NOT NULL REFERENCES SUCURSALES(id),
+    cargoPuesto NVARCHAR(50) NOT NULL,
+    salario DECIMAL(10, 2) NOT NULL,
+    fechaContratacion DATE NOT NULL
 );
 GO
 
 CREATE TABLE CLIENTES (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_usuario INT REFERENCES USUARIOS(id),
-    nombreCompletoC NVARCHAR(100),
-    telefono NVARCHAR(20),
-    direccionPrincipal NVARCHAR(150),
-    fechaNacimiento DATE
+    id_usuario INT NOT NULL UNIQUE REFERENCES USUARIOS(id),
+    nombreCompletoC NVARCHAR(100) NOT NULL,
+    telefono NVARCHAR(20) NOT NULL,
+    direccionPrincipal NVARCHAR(150) NOT NULL,
+    fechaNacimiento DATE NOT NULL
 );
 GO
 
 CREATE TABLE PRODUCTOS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    categoria INT,
-    id_marca INT REFERENCES MARCAS(id),
-    nombreProducto NVARCHAR(100),
-    descripcionLarga NVARCHAR(200),
-    precioVenta DECIMAL(10, 2),
-    numeroSerie NVARCHAR(50),
-    modelo NVARCHAR(50),
-    especificacionesTecnicas NVARCHAR(MAX)
+    categoria INT NOT NULL,
+    id_marca INT NOT NULL REFERENCES MARCAS(id),
+    nombreProducto NVARCHAR(100) NOT NULL,
+    descripcionLarga NVARCHAR(200) NOT NULL,
+    precioVenta DECIMAL(10, 2) NOT NULL,
+    numeroSerie NVARCHAR(50) NOT NULL UNIQUE,
+    modelo NVARCHAR(50) NOT NULL,
+    especificacionesTecnicas NVARCHAR(MAX) NOT NULL
 );
 GO
 
 CREATE TABLE INVENTARIOS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_producto INT REFERENCES PRODUCTOS(id),
-    id_sucursal INT REFERENCES SUCURSALES(id),
-    cantidadDisponible INT,
-    stockMinimo INT,
-    estanteriaUbicacion NVARCHAR(50),
-    ultimaActualizacion DATETIME,
-    capacidadBodega INT
+    id_producto INT NOT NULL REFERENCES PRODUCTOS(id),
+    id_sucursal INT NOT NULL REFERENCES SUCURSALES(id),
+    cantidadDisponible INT NOT NULL,
+    stockMinimo INT NOT NULL,
+    estanteriaUbicacion NVARCHAR(50) NOT NULL,
+    ultimaActualizacion DATETIME NOT NULL,
+    capacidadBodega INT NOT NULL
 );
 GO
 
 CREATE TABLE COMPRAS_PRODUCTOS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_proveedor INT REFERENCES PROVEEDORES(id),
-    id_sucursal INT REFERENCES SUCURSALES(id),
-    fechaOrden DATETIME,
-    estadoOrden NVARCHAR(50),
-    totalEstimado DECIMAL(10, 2),
-    notasInternas NVARCHAR(200)
+    id_proveedor INT NOT NULL REFERENCES PROVEEDORES(id),
+    id_sucursal INT NOT NULL REFERENCES SUCURSALES(id),
+    fechaOrden DATETIME NOT NULL,
+    estadoOrden NVARCHAR(50) NOT NULL,
+    totalEstimado DECIMAL(10, 2) NOT NULL,
+    notasInternas NVARCHAR(200) NOT NULL
 );
 GO
 
 CREATE TABLE DETALLES_ORDENES_COMPRAS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_compras_producto INT REFERENCES COMPRAS_PRODUCTOS(id),
-    id_producto INT REFERENCES PRODUCTOS(id),
-    cantidadSolicitada INT,
-    costoUnitario DECIMAL(10, 2),
-    subtotalCosto DECIMAL(10, 2)
+    id_compras_producto INT NOT NULL REFERENCES COMPRAS_PRODUCTOS(id),
+    id_producto INT NOT NULL REFERENCES PRODUCTOS(id),
+    cantidadSolicitada INT NOT NULL,
+    costoUnitario DECIMAL(10, 2) NOT NULL,
+    subtotalCosto DECIMAL(10, 2) NOT NULL
 );
 GO
 
 CREATE TABLE VENTAS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_cliente INT REFERENCES CLIENTES(id),
-    id_sucursal INT REFERENCES SUCURSALES(id),
-    id_promocion INT REFERENCES PROMOCIONES(id),
-    fechaVenta DATETIME,
-    estadoVenta NVARCHAR(50),
-    totalPagar DECIMAL(10, 2),
-    direccionEnvio NVARCHAR(150)
+    id_cliente INT NOT NULL REFERENCES CLIENTES(id),
+    id_sucursal INT NOT NULL REFERENCES SUCURSALES(id),
+    id_promocion INT REFERENCES PROMOCIONES(id), -- Opcional: la venta puede no tener cupón de descuento
+    fechaVenta DATETIME NOT NULL,
+    estadoVenta NVARCHAR(50) NOT NULL,
+    totalPagar DECIMAL(10, 2) NOT NULL,
+    direccionEnvio NVARCHAR(150) NOT NULL
 );
 GO
 
 CREATE TABLE DETALLE_VENTAS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_venta INT REFERENCES VENTAS(id),
-    id_producto INT REFERENCES PRODUCTOS(id),
-    cantidad INT,
-    precioUnitarioVenta DECIMAL(10, 2),
-    descuentoAplicado DECIMAL(10, 2),
-    subtotal DECIMAL(10, 2)
+    id_venta INT NOT NULL REFERENCES VENTAS(id),
+    id_producto INT NOT NULL REFERENCES PRODUCTOS(id),
+    cantidad INT NOT NULL,
+    precioUnitarioVenta DECIMAL(10, 2) NOT NULL,
+    descuentoAplicado DECIMAL(10, 2) NOT NULL,
+    subtotal DECIMAL(10, 2) NOT NULL
 );
 GO
 
 CREATE TABLE PAGOS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_venta INT REFERENCES VENTAS(id),
-    id_metodo_pago INT REFERENCES METODOS_PAGO(id),
-    montoPagado DECIMAL(10, 2),
-    fechaPago DATETIME,
-    estadoTransaccion NVARCHAR(50),
-    referenciaPasarela NVARCHAR(100)
+    id_venta INT NOT NULL REFERENCES VENTAS(id),
+    id_metodo_pago INT NOT NULL REFERENCES METODOS_PAGO(id),
+    montoPagado DECIMAL(10, 2) NOT NULL,
+    fechaPago DATETIME NOT NULL,
+    estadoTransaccion NVARCHAR(50) NOT NULL,
+    referenciaPasarela NVARCHAR(100) NOT NULL UNIQUE
 );
 GO
 
 CREATE TABLE ENVIOS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_venta INT REFERENCES VENTAS(id),
-    id_empresa_paqueteria INT REFERENCES EmpresaPaqueteria(id),
-    numeroGuia NVARCHAR(50),
-    estado NVARCHAR(50),
-    fechaEstimadaEntrega DATE,
-    fechaEntregaReal DATE,
-    costo DECIMAL(10, 2)
+    id_venta INT NOT NULL UNIQUE REFERENCES VENTAS(id),
+    id_empresa_paqueteria INT NOT NULL REFERENCES EMPRESAS_PAQUETERIA(id),
+    numeroGuia NVARCHAR(50) NOT NULL UNIQUE,
+    estado NVARCHAR(50) NOT NULL,
+    fechaEstimadaEntrega DATE NOT NULL,
+    fechaEntregaReal DATE, -- Opcional: nulo hasta que el pedido sea entregado
+    costo DECIMAL(10, 2) NOT NULL
 );
 GO
 
 CREATE TABLE GARANTIAS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_detalle_venta INT REFERENCES DETALLE_VENTAS(id),
-    fechaSolicitud DATE,
-    motivoFalla NVARCHAR(255),
-    estado NVARCHAR(50),
-    resolucionTecnica NVARCHAR(255),
-    fechaCierre DATE
+    id_detalle_venta INT NOT NULL REFERENCES DETALLE_VENTAS(id),
+    fechaSolicitud DATE NOT NULL,
+    motivoFalla NVARCHAR(255) NOT NULL,
+    estado NVARCHAR(50) NOT NULL,
+    resolucionTecnica NVARCHAR(255), -- Opcional: nulo hasta ser revisado en laboratorio
+    fechaCierre DATE -- Opcional: nulo hasta que la garantía concluya
 );
 GO
 
 CREATE TABLE DEVOLUCIONES (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_venta INT REFERENCES VENTAS(id),
-    id_metodo_pago_reembolso INT REFERENCES METODOS_PAGO(id),
-    fechaSolicitud DATE,
-    motivo NVARCHAR(255),
-    estadoProceso NVARCHAR(50),
-    montoReembolsado DECIMAL(10, 2)
+    id_venta INT NOT NULL REFERENCES VENTAS(id),
+    id_metodo_pago_reembolso INT NOT NULL REFERENCES METODOS_PAGO(id),
+    fechaSolicitud DATE NOT NULL,
+    motivo NVARCHAR(255) NOT NULL,
+    estadoProceso NVARCHAR(50) NOT NULL,
+    montoReembolsado DECIMAL(10, 2) NOT NULL
 );
 GO
 
 CREATE TABLE RESENAS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    id_producto INT REFERENCES PRODUCTOS(id),
-    id_cliente INT REFERENCES CLIENTES(id),
-    calificacionEstrellas INT,
-    comentario NVARCHAR(200),
-    fechaPublicacion DATETIME
+    id_producto INT NOT NULL REFERENCES PRODUCTOS(id),
+    id_cliente INT NOT NULL REFERENCES CLIENTES(id),
+    calificacionEstrellas INT NOT NULL,
+    comentario NVARCHAR(200) NOT NULL,
+    fechaPublicacion DATETIME NOT NULL
 );
 GO
 
 -- =============================================
--- 3. INSERCIÓN DE DATOS
+-- 3. INSERCIÓN DE DATOS DE PRUEBA
 -- =============================================
 
 -- 1. ROLES
@@ -265,8 +265,8 @@ INSERT INTO SUCURSALES (nombre, direccion, ciudad, telefonoContacto, horarioAten
 VALUES ('Sucursal Principal Bello', 'Carrera 50 # 38-10', 'Bello', '6044445566', 'Lunes a Sábado 8:00 AM - 7:00 PM');
 GO
 
--- 7. EmpresaPaqueteria
-INSERT INTO EmpresaPaqueteria (telefono, correoElectronico, NIT, nombrePaqueteria)
+-- 7. EMPRESAS_PAQUETERIA
+INSERT INTO EMPRESAS_PAQUETERIA (telefono, correoElectronico, NIT, nombrePaqueteria)
 VALUES ('018000911000', 'servicio@servientrega.com', '860012345-8', 'Servientrega');
 GO
 
@@ -327,7 +327,7 @@ GO
 
 -- 19. GARANTIAS
 INSERT INTO GARANTIAS (id_detalle_venta, fechaSolicitud, motivoFalla, estado, resolucionTecnica, fechaCierre)
-VALUES (1, GETDATE(), 'Fallo en clic derecho', 'En Proceso', 'Pendiente de revisión en laboratorio', 2026-10-04);
+VALUES (1, GETDATE(), 'Fallo en clic derecho', 'En Proceso', 'Pendiente de revisión en laboratorio', '2026-10-04');
 GO
 
 -- 20. DEVOLUCIONES
@@ -338,5 +338,4 @@ GO
 -- 21. RESENAS
 INSERT INTO RESENAS (id_producto, id_cliente, calificacionEstrellas, comentario, fechaPublicacion)
 VALUES (1, 1, 5, 'Excelente mouse, muy ergonómico y preciso.', GETDATE());
-GO
-*/
+GO*/

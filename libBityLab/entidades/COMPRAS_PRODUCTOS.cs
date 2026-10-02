@@ -14,8 +14,8 @@ namespace libBityLab.entidades
         public string? estadoOrden { get; set; }
         public decimal totalEstimado { get; set; }
         public string? notasInternas { get; set; }
-        [ForeignKey("id_proveedor")] public SUCURSALES? _SUCURSALES { get; set; }
-        [ForeignKey("id_sucursal")] public PROVEEDORES? _PROVEEDORES { get; set; }
+        [ForeignKey("id_sucursal")] public SUCURSALES? _SUCURSALES { get; set; }
+        [ForeignKey("id_proveedor")] public PROVEEDORES? _PROVEEDORES { get; set; }
         public List<DETALLES_ORDENES_COMPRAS>? DETALLES_ORDENES_COMPRAS { get; set; }
       
 

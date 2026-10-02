@@ -15,7 +15,7 @@ namespace presentacion_mst
         public testPROMOCIONES()
         {
             this.conexion = new Conexion();
-            this.conexion.StringConexion = "server=kuskuruma;database=BityLab;Integrated Security=True;TrustServerCertificate=true;";
+            this.conexion.StringConexion = "server=localhost;database=BityLab;Integrated Security=True;TrustServerCertificate=true;";
         }
 
         [TestMethod]
