@@ -10,7 +10,7 @@ GO
 
 CREATE TABLE ROLES (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    nombre NVARCHAR(50) NOT NULL UNIQUE,
+    nombre NVARCHAR(50) NOT NULL,
     descripcion NVARCHAR(255) NOT NULL,
     salarioEstimado DECIMAL(10, 2) NOT NULL
 );
@@ -18,7 +18,7 @@ GO
 
 CREATE TABLE MARCAS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    nombre NVARCHAR(50) NOT NULL UNIQUE,
+    nombre NVARCHAR(50) NOT NULL,
     sitioWeb NVARCHAR(100) NOT NULL,
     correoSoporte NVARCHAR(100) NOT NULL,
     telefonoContacto NVARCHAR(20) NOT NULL
@@ -38,7 +38,7 @@ GO
 
 CREATE TABLE METODOS_PAGO (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    nombre NVARCHAR(50) NOT NULL UNIQUE,
+    nombre NVARCHAR(50) NOT NULL,
     descripcion NVARCHAR(255) NOT NULL
 );
 GO
@@ -55,7 +55,7 @@ GO
 
 CREATE TABLE SUCURSALES (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
-    nombre NVARCHAR(100) NOT NULL UNIQUE,
+    nombre NVARCHAR(100) NOT NULL,
     direccion NVARCHAR(150) NOT NULL,
     ciudad NVARCHAR(50) NOT NULL,
     telefonoContacto NVARCHAR(20) NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE EMPRESAS_PAQUETERIA (
     telefono NVARCHAR(20) NOT NULL,
     correoElectronico NVARCHAR(100) NOT NULL UNIQUE,
     NIT NVARCHAR(20) NOT NULL UNIQUE,
-    nombrePaqueteria NVARCHAR(100) NOT NULL UNIQUE
+    nombrePaqueteria NVARCHAR(100) NOT NULL
 );
 GO
 
@@ -157,7 +157,7 @@ CREATE TABLE VENTAS (
     id INT NOT NULL PRIMARY KEY IDENTITY(1,1),
     id_cliente INT NOT NULL REFERENCES CLIENTES(id),
     id_sucursal INT NOT NULL REFERENCES SUCURSALES(id),
-    id_promocion INT REFERENCES PROMOCIONES(id), -- Opcional: la venta puede no tener cupón de descuento
+    id_promocion INT REFERENCES PROMOCIONES(id), -- Opcional: la venta puede no aplicar cupón
     fechaVenta DATETIME NOT NULL,
     estadoVenta NVARCHAR(50) NOT NULL,
     totalPagar DECIMAL(10, 2) NOT NULL,
@@ -194,7 +194,7 @@ CREATE TABLE ENVIOS (
     numeroGuia NVARCHAR(50) NOT NULL UNIQUE,
     estado NVARCHAR(50) NOT NULL,
     fechaEstimadaEntrega DATE NOT NULL,
-    fechaEntregaReal DATE, -- Opcional: nulo hasta que el pedido sea entregado
+    fechaEntregaReal DATE, -- Opcional: nulo mientras está en camino
     costo DECIMAL(10, 2) NOT NULL
 );
 GO
@@ -205,8 +205,8 @@ CREATE TABLE GARANTIAS (
     fechaSolicitud DATE NOT NULL,
     motivoFalla NVARCHAR(255) NOT NULL,
     estado NVARCHAR(50) NOT NULL,
-    resolucionTecnica NVARCHAR(255), -- Opcional: nulo hasta ser revisado en laboratorio
-    fechaCierre DATE -- Opcional: nulo hasta que la garantía concluya
+    resolucionTecnica NVARCHAR(255), -- Opcional: nulo hasta ser evaluado
+    fechaCierre DATE -- Opcional: nulo hasta cerrar el proceso
 );
 GO
 
